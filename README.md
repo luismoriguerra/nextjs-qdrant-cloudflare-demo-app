@@ -1,20 +1,123 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`c3`](https://developers.cloudflare.com/pages/get-started/c3).
+# NextJS Qdrant Notes App
 
-## Getting Started
+A modern note-taking application built with Next.js that leverages Qdrant vector database for semantic search capabilities. The application allows users to create notebooks, add notes, and perform semantic searches across their notes using vector embeddings.
 
-First, run the development server:
+## Features
 
+- 📚 Notebook Management: Create, read, update, and delete notebooks
+- 📝 Note Taking: Create and manage notes within notebooks
+- 🔍 Semantic Search: Search through notes using natural language queries
+- 🧠 Vector Embeddings: Automatically generates embeddings for note content
+- 🚀 Modern UI: Built with Tailwind CSS and shadcn/ui components
+- ☁️ Cloudflare Integration: Deployable to Cloudflare Pages with D1 database
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, Tailwind CSS
+- **Backend**: Next.js API Routes (Edge Runtime)
+- **Database**: Cloudflare D1 (SQLite)
+- **Vector Database**: Qdrant
+- **UI Components**: shadcn/ui
+- **Deployment**: Cloudflare Pages
+
+## Prerequisites
+
+- Node.js 18 or higher
+- npm or yarn package manager
+- Cloudflare account (for deployment)
+- Qdrant instance (local or cloud)
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+# Qdrant Configuration
+QDRANT_API_KEY=your_api_key
+QDRANT_URL=your_qdrant_url
+
+# Other configurations as needed
+```
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd nextjs-qdrant
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+
+## Project Structure
+
+```
+├── server/                 # Backend server code
+│   ├── infrastructure/     # Database and external service connections
+│   └── services/          # Business logic services
+├── src/
+│   ├── app/               # Next.js app directory
+│   │   ├── api/          # API routes
+│   │   └── notebooks/    # Frontend pages
+│   ├── components/        # React components
+│   └── lib/              # Utility functions
+├── migrations/            # Database migrations
+└── public/               # Static assets
+```
+
+## API Endpoints
+
+- `GET /api/notebooks` - List all notebooks
+- `POST /api/notebooks` - Create a new notebook
+- `GET /api/notebooks/:id` - Get a specific notebook
+- `DELETE /api/notebooks/:id` - Delete a notebook
+- `GET /api/notebooks/:id/notes` - List notes in a notebook
+- `POST /api/notebooks/:id/notes` - Create a new note
+- `GET /api/vectors/search` - Perform semantic search
+- `GET /api/vectors/collections` - List vector collections
+
+## Development
+
+The project uses several development tools and scripts:
+
+```bash
+# Development
+npm run dev          # Start development server
+
+# Linting
+npm run lint         # Run ESLint
+
+# Cloudflare Pages
+npm run pages:build  # Build for Cloudflare Pages
+npm run preview      # Preview Pages deployment locally
+npm run deploy       # Deploy to Cloudflare Pages
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Cloudflare integration
 

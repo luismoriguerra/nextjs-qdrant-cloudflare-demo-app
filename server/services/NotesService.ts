@@ -34,7 +34,7 @@ export class NotesService {
             `SELECT * FROM notes WHERE id = ?`
         ).bind(id)
             .first<Note>();
-        
+
         return result || null;
     }
 
@@ -45,7 +45,7 @@ export class NotesService {
             ORDER BY created_at DESC`
         ).bind(notebook_id)
             .all<Note>();
-        
+
         return result.results;
     }
 
@@ -53,7 +53,7 @@ export class NotesService {
         const result = await this.db.prepare(
             `SELECT * FROM notes ORDER BY created_at DESC`
         ).all<Note>();
-        
+
         return result.results;
     }
 
@@ -78,5 +78,14 @@ export class NotesService {
             .run();
 
         return result.success;
+    }
+
+    async getNotesByIds(ids: string[]): Promise<Note[]> {
+        const result = await this.db.prepare(
+            `SELECT * FROM notes WHERE id IN (${ids.map(() => '?').join(',')})`
+        ).bind(...ids)
+            .all<Note>();
+
+        return result.results;
     }
 } 

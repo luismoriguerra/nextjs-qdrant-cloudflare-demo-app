@@ -80,3 +80,13 @@ Content-Type: application/json
     "name": "next_qdrant_768",
     "vectorSize": 768
 }
+
+### Search for vectors
+
+POST {{domain}}/api/vectors/search
+Content-Type: application/json
+
+{
+    "question": "What is FastEmbed",
+    "limit": 2
+}
