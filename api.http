@@ -87,6 +87,16 @@ POST {{domain}}/api/vectors/search
 Content-Type: application/json
 
 {
-    "question": "What is FastEmbed",
+    "question": "Is it possible to scale down a Qdrant Cloud cluster",
     "limit": 2
 }
+
+
+### Ingest data into a vector collection
+POST {{domain}}/api/vectors/ingest-data
+Content-Type: application/json
+
+{
+    "notebookId": "kQI06dY3wYZcg-yhcXsaP"
+}
+

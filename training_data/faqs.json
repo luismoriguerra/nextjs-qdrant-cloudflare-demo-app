@@ -1,0 +1,78 @@
+[
+  {
+    "title": "What is the maximum vector dimension supported by Qdrant?",
+    "content": "Qdrant supports up to 65,535 dimensions by default, but this can be configured to support higher dimensions."
+  },
+  {
+    "title": "What is the maximum size of vector metadata that can be stored?",
+    "content": "There is no inherent limitation on metadata size, but it should be optimized for performance and resource usage. Users can set upper limits in the configuration."
+  },
+  {
+    "title": "Can the same similarity search query yield different results on different machines?",
+    "content": "Yes, due to differences in hardware configurations and parallel processing, results may vary slightly."
+  },
+  {
+    "title": "What to do with documents with small chunks using a fixed chunk strategy?",
+    "content": "For documents with small chunks, consider merging chunks or using variable chunk sizes to optimize vector representation and search performance."
+  },
+  {
+    "title": "How do I choose the right vector embeddings for my use case?",
+    "content": "This depends on the nature of your data and the specific application. Consider factors like dimensionality, domain-specific models, and the performance characteristics of different embeddings."
+  },
+  {
+    "title": "How does Qdrant handle different vector embeddings from various providers in the same collection?",
+    "content": "Qdrant natively supports multiple vectors per data point, allowing different embeddings from various providers to coexist within the same collection."
+  },
+  {
+    "title": "Can I migrate my embeddings from another vector store to Qdrant?",
+    "content": "Yes, Qdrant supports migration of embeddings from other vector stores, facilitating easy transitions and adoption of Qdrant’s features."
+  },
+  {
+    "title": "How does Qdrant handle real-time data updates and search?",
+    "content": "Qdrant supports live updates for vector data, with newly inserted, updated and deleted vectors available for immediate search. The system uses full-scan search on unindexed segments during background index updates."
+  },
+  {
+    "title": "My search results contain vectors with null values. Why?",
+    "content": "By default, Qdrant tries to minimize network traffic and doesn’t return vectors in search results. But you can force Qdrant to do so by setting the with_vector parameter of the Search/Scroll to true.\n\nIf you’re still seeing \"vector\": null in your results, it might be that the vector you’re passing is not in the correct format, or there’s an issue with how you’re calling the upsert method."
+  },
+  {
+    "title": "How can I search without a vector?",
+    "content": "You are likely looking for the scroll method. It allows you to retrieve the records based on filters or even iterate over all the records in the collection."
+  },
+  {
+    "title": "Does Qdrant support a full-text search or a hybrid search?",
+    "content": "Qdrant is a vector search engine in the first place, and we only implement full-text support as long as it doesn’t compromise the vector search use case. That includes both the interface and the performance.\n\nWhat Qdrant can do:\n- Search with full-text filters\n- Apply full-text filters to the vector search (i.e., perform vector search among the records with specific words or phrases)\n- Do prefix search and semantic search-as-you-type\n- Sparse vectors, as used in SPLADE or similar models\n- Multi-vectors, for example ColBERT and other late-interaction models\n- Combination of the multiple searches\n\nWhat Qdrant doesn’t plan to support:\n- Non-vector-based retrieval or ranking functions\n- Built-in ontologies or knowledge graphs\n- Query analyzers and other NLP tools\n\nOf course, you can always combine Qdrant with any specialized tool you need, including full-text search engines. Read more about our approach to hybrid search."
+  },
+  {
+    "title": "How many collections can I create?",
+    "content": "As many as you want, but be aware that each collection requires additional resources. It is highly recommended not to create many small collections, as it will lead to significant resource consumption overhead.\n\nWe consider creating a collection for each user/dialog/document as an antipattern.\n\nPlease read more about collections, isolation, and multiple users in our Multitenancy tutorial."
+  },
+  {
+    "title": "How do I upload a large number of vectors into a Qdrant collection?",
+    "content": "Read about our recommendations in the bulk upload tutorial."
+  },
+  {
+    "title": "Can I only store quantized vectors and discard full precision vectors?",
+    "content": "No, Qdrant requires full precision vectors for operations like reindexing, rescoring, etc."
+  },
+  {
+    "title": "Is Qdrant compatible with CPUs or GPUs for vector computation?",
+    "content": "Qdrant primarily relies on CPU acceleration for scalability and efficiency. However, we also support GPU-accelerated indexing on all major vendors."
+  },
+  {
+    "title": "Do you guarantee compatibility across versions?",
+    "content": "In case your version is older, we only guarantee compatibility between two consecutive minor versions. This also applies to client versions. Ensure your client version is never more than one minor version away from your cluster version. While we will assist with break/fix troubleshooting of issues and errors specific to our products, Qdrant is not accountable for reviewing, writing (or rewriting), or debugging custom code."
+  },
+  {
+    "title": "Do you support downgrades?",
+    "content": "We do not support downgrading a cluster on any of our products. If you deploy a newer version of Qdrant, your data is automatically migrated to the newer storage format. This migration is not reversible."
+  },
+  {
+    "title": "How do I avoid issues when updating to the latest version?",
+    "content": "We only guarantee compatibility if you update between consecutive versions. You would need to upgrade versions one at a time: 1.1 -> 1.2, then 1.2 -> 1.3, then 1.3 -> 1.4."
+  },
+  {
+    "title": "Is it possible to scale down a Qdrant Cloud cluster?",
+    "content": "It is possible to vertically scale down a Qdrant Cloud cluster, as long as the disk size is not reduced. Horizontal downscaling is currently not possible, but on our roadmap. In some cases, we might be able to help you with that manually. Please open a support ticket, so that we can assist."
+  }
+]
