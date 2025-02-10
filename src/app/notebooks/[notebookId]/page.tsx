@@ -9,6 +9,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Breadcrumb, BreadcrumbItem } from '@/components/ui/breadcrumb';
 import { NotesList } from '@/components/notes/notes-list';
+import { VectorSearch } from '@/components/vector-search/vector-search';
 import Link from 'next/link';
 
 export const runtime = 'edge';
@@ -71,12 +72,16 @@ export default async function NotebookPage({ params }: NotebookPageProps) {
 
         <div className="mt-8">
           <Tabs defaultValue="notes" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="notes">Notes</TabsTrigger>
+              <TabsTrigger value="search">Search</TabsTrigger>
               <TabsTrigger value="chats">Chats</TabsTrigger>
             </TabsList>
             <TabsContent value="notes">
               <NotesList notebookId={params.notebookId} />
+            </TabsContent>
+            <TabsContent value="search">
+              <VectorSearch notebookId={params.notebookId} />
             </TabsContent>
             <TabsContent value="chats">
               <Card>
