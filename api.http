@@ -58,3 +58,25 @@ Content-Type: application/json
 
 ### Delete a note
 DELETE {{domain}}/api/notebooks/{{notebookId}}/notes/{{noteId}}
+
+### Generate embeddings
+POST http://localhost:3000/api/embeddings
+Content-Type: application/json
+
+{
+    "content": "This is a sample text to generate embeddings from"
+}
+
+### Vector Endpoints ###
+
+### Get all vector collections
+GET {{domain}}/api/vectors/collections
+
+### Create a vector collection
+POST {{domain}}/api/vectors/collections
+Content-Type: application/json
+
+{
+    "name": "next_qdrant_768",
+    "vectorSize": 768
+}

@@ -1,5 +1,7 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export interface Note {
-    id: number;
+    id: string;
     title: string;
     content: string;
     notebook_id: string;
@@ -12,12 +14,12 @@ export class NotesService {
 
     async createNote(title: string, content: string, notebook_id: string): Promise<Note> {
         const now = new Date().toISOString();
-
+        const id = uuidv4();
         const result = await this.db.prepare(
-            `INSERT INTO notes (title, content, notebook_id, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?)
+            `INSERT INTO notes (id, title, content, notebook_id, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?)
             RETURNING *`
-        ).bind(title, content, notebook_id, now, now)
+        ).bind(id, title, content, notebook_id, now, now)
             .first<Note>();
 
         if (!result) {
@@ -27,7 +29,7 @@ export class NotesService {
         return result;
     }
 
-    async getNote(id: number): Promise<Note | null> {
+    async getNote(id: string): Promise<Note | null> {
         const result = await this.db.prepare(
             `SELECT * FROM notes WHERE id = ?`
         ).bind(id)
@@ -55,7 +57,7 @@ export class NotesService {
         return result.results;
     }
 
-    async updateNote(id: number, title: string, content: string): Promise<Note | null> {
+    async updateNote(id: string, title: string, content: string): Promise<Note | null> {
         const now = new Date().toISOString();
 
         const result = await this.db.prepare(
@@ -69,7 +71,7 @@ export class NotesService {
         return result || null;
     }
 
-    async deleteNote(id: number): Promise<boolean> {
+    async deleteNote(id: string): Promise<boolean> {
         const result = await this.db.prepare(
             `DELETE FROM notes WHERE id = ?`
         ).bind(id)

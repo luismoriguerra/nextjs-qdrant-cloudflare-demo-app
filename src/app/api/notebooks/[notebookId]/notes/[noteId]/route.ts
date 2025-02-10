@@ -6,16 +6,17 @@ export const runtime = 'edge';
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { notebookId: string; noteId: string } }
+    { params }: { params: Promise<{ notebookId: string; noteId: string }> }
 ) {
+    const { notebookId, noteId } = await params;
     const notesService = new NotesService(getDb());
-    const note = await notesService.getNote(parseInt(params.noteId));
+    const note = await notesService.getNote(noteId);
 
     if (!note) {
         return Response.json({ error: "Note not found" }, { status: 404 });
     }
 
-    if (note.notebook_id !== params.notebookId) {
+    if (note.notebook_id !== notebookId) {
         return Response.json({ error: "Note does not belong to this notebook" }, { status: 403 });
     }
 
@@ -24,7 +25,7 @@ export async function GET(
 
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { notebookId: string; noteId: string } }
+    { params }: { params: Promise<{ notebookId: string; noteId: string }> }
 ) {
     const { title, content } = await request.json() as { title: string; content: string };
 
@@ -32,37 +33,39 @@ export async function PUT(
         return Response.json({ error: "Title and content are required" }, { status: 400 });
     }
 
+    const { notebookId, noteId } = await params;
     const notesService = new NotesService(getDb());
-    
+        
     // Verify note exists and belongs to the notebook
-    const existingNote = await notesService.getNote(parseInt(params.noteId));
+    const existingNote = await notesService.getNote(noteId);
     if (!existingNote) {
         return Response.json({ error: "Note not found" }, { status: 404 });
     }
-    if (existingNote.notebook_id !== params.notebookId) {
+    if (existingNote.notebook_id !== notebookId) {
         return Response.json({ error: "Note does not belong to this notebook" }, { status: 403 });
     }
 
-    const updatedNote = await notesService.updateNote(parseInt(params.noteId), title, content);
+    const updatedNote = await notesService.updateNote(noteId, title, content);
     return Response.json(updatedNote);
 }
 
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { notebookId: string; noteId: string } }
+    { params }: { params: Promise<{ notebookId: string; noteId: string }> }
 ) {
+    const { notebookId, noteId } = await params;
     const notesService = new NotesService(getDb());
     
     // Verify note exists and belongs to the notebook
-    const existingNote = await notesService.getNote(parseInt(params.noteId));
+    const existingNote = await notesService.getNote(noteId);
     if (!existingNote) {
         return Response.json({ error: "Note not found" }, { status: 404 });
     }
-    if (existingNote.notebook_id !== params.notebookId) {
+    if (existingNote.notebook_id !== notebookId) {
         return Response.json({ error: "Note does not belong to this notebook" }, { status: 403 });
     }
 
-    const success = await notesService.deleteNote(parseInt(params.noteId));
+    const success = await notesService.deleteNote(noteId);
     if (!success) {
         return Response.json({ error: "Failed to delete note" }, { status: 500 });
     }
