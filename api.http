@@ -1,0 +1,60 @@
+@domain=http://localhost:3000
+
+
+### 
+GET {{domain}}/api/notebooks
+
+### @name createNotebook
+POST {{domain}}/api/notebooks
+Content-Type: application/json
+
+{
+    "title": "My 2nd Notebook"
+}
+
+### @name getNotebook
+@notebookId = kQI06dY3wYZcg-yhcXsaP
+
+GET {{domain}}/api/notebooks/{{notebookId}}
+
+### Update a notebook
+PUT {{domain}}/api/notebooks/{{notebookId}}
+Content-Type: application/json
+
+{
+    "title": "Updated Notebook Title"
+}
+
+### Delete a notebook
+DELETE {{domain}}/api/notebooks/{{notebookId}}
+
+### Notes Endpoints ###
+
+### Get all notes in a notebook
+GET {{domain}}/api/notebooks/{{notebookId}}/notes
+
+### @name createNote
+POST {{domain}}/api/notebooks/{{notebookId}}/notes
+Content-Type: application/json
+
+{
+    "title": "My 2nd Note",
+    "content": "This is the content of my first note"
+}
+
+### @name getNote
+@noteId = 1
+
+GET {{domain}}/api/notebooks/{{notebookId}}/notes/{{noteId}}
+
+### Update a note
+PUT {{domain}}/api/notebooks/{{notebookId}}/notes/{{noteId}}
+Content-Type: application/json
+
+{
+    "title": "Updated Note Title",
+    "content": "This is the updated content of my note"
+}
+
+### Delete a note
+DELETE {{domain}}/api/notebooks/{{notebookId}}/notes/{{noteId}}
